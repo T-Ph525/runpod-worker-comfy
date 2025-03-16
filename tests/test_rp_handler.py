@@ -232,3 +232,34 @@ class TestRunpodWorkerComfy(unittest.TestCase):
 
         self.assertEqual(len(responses), 3)
         self.assertEqual(responses["status"], "error")
+
+    def test_validate_workflow_in_test_input_json(self):
+        with open("../test_input.json", "r") as file:
+            test_input = json.load(file)
+        validated_data, error = rp_handler.validate_input(test_input)
+        self.assertIsNone(error)
+        self.assertIsNotNone(validated_data)
+        self.assertIn("workflow", validated_data)
+        self.assertIn("images", validated_data)
+
+    @patch("rp_handler.queue_workflow")
+    @patch("rp_handler.get_history")
+    @patch("rp_handler.process_output_images")
+    def test_handler_with_test_input_json(
+        self, mock_process_output_images, mock_get_history, mock_queue_workflow
+    ):
+        with open("../test_input.json", "r") as file:
+            test_input = json.load(file)
+
+        mock_queue_workflow.return_value = {"prompt_id": "123"}
+        mock_get_history.return_value = {"123": {"outputs": {"node_id": "output_data"}}}
+        mock_process_output_images.return_value = {"status": "success", "message": "image_data"}
+
+        job = {"input": test_input}
+        result = rp_handler.handler(job)
+
+        self.assertEqual(result["status"], "success")
+        self.assertEqual(result["message"], "image_data")
+        mock_queue_workflow.assert_called_once_with(test_input["workflow"])
+        mock_get_history.assert_called_once_with("123")
+        mock_process_output_images.assert_called_once_with({"node_id": "output_data"}, job["id"])

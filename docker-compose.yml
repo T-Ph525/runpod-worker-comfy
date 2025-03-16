@@ -16,3 +16,4 @@ services:
     volumes:
       - ./data/comfyui/output:/comfyui/output
       - ./data/runpod-volume:/runpod-volume
+      - ./test_input.json:/test_input.json
