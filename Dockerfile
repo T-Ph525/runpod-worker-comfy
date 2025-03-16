@@ -32,7 +32,7 @@ RUN /usr/bin/yes | comfy --workspace /comfyui install --cuda-version 11.8 --nvid
 # Change working directory to ComfyUI
 WORKDIR /comfyui
 
-# Install runpod
+# Install runpod and requests
 RUN pip install runpod requests
 
 # Support for the network volume
@@ -58,7 +58,6 @@ CMD ["/start.sh"]
 FROM base as downloader
 
 ARG HUGGINGFACE_ACCESS_TOKEN
-ARG MODEL_TYPE
 
 # Change working directory to ComfyUI
 WORKDIR /comfyui
@@ -66,10 +65,11 @@ WORKDIR /comfyui
 # Create necessary directories
 RUN mkdir -p models/checkpoints models/vae
 
+# Download models from HuggingFace
 RUN wget -O models/checkpoints/uberRealisticPornMerge_urpmv13Inpainting.safetensors https://huggingface.co/mrcuddle/urpm-inpaint-v13/resolve/main/uberRealisticPornMerge_urpmv13Inpainting.safetensors && \
     wget -O models/checkpoints/sd_xl_base_1.0.safetensors https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors && \
     wget -O models/vae/sdxl_vae.safetensors https://huggingface.co/stabilityai/sdxl-vae/resolve/main/sdxl_vae.safetensors && \
-    wget -O models/vae/sdxl-vae-fp16-fix.safetensors https://huggingface.co/madebyollin/sdxl-vae-fp16-fix/resolve/main/sdxl_vae.safetensors; \
+    wget -O models/vae/sdxl-vae-fp16-fix.safetensors https://huggingface.co/madebyollin/sdxl-vae-fp16-fix/resolve/main/sdxl_vae.safetensors
 
 # Stage 3: Final image
 FROM base as final
