@@ -69,7 +69,7 @@ RUN mkdir -p /runpod-volume/models/checkpoints /runpod-volume/models/vae
 
 # Download models from Hugging Face (if they are not already present)
 RUN wget -nc -O /runpod-volume/models/checkpoints/URPM-Inpaint-SDXL.safetensors \
-https://huggingface.co/mrcuddle/URPM-Inpaint-Hyper-SDXL/resolve/main/URPM-Inpaint-SDXL.safetensors && \
+    https://huggingface.co/mrcuddle/URPM-Inpaint-Hyper-SDXL/resolve/main/URPM-Inpaint-SDXL.safetensors && \
     wget -nc -O /runpod-volume/models/checkpoints/URPM-Inpaint-SDXL.safetensors \
     https://huggingface.co/mrcuddle/URPM-SD2.1/resolve/main/uberRealisticPornMerge21_v2.safetensors && \
     wget -nc -O /runpod-volume/models/vae/sdxl_vae.safetensors \
