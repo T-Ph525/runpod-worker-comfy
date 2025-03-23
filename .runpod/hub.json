@@ -11,8 +11,20 @@
       {
         "name": "Preset 1",
         "defaults": {
-          "STATIC_1": "value_1",
-          "STRING_1": "default value 1"
+          "workflow": {},
+          "prompt": "Example prompt text",
+          "images": [
+            {
+              "name": "example_image_name.png",
+              "image": "base64_encoded_string"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Preset 2",
+        "defaults": {
+          "prompt": "Example prompt text"
         }
       }
     ],
