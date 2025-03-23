@@ -43,7 +43,7 @@ ADD src/start.sh src/restore_snapshot.sh src/rp_handler.py test_input.json ./
 RUN chmod +x /start.sh /restore_snapshot.sh
 
 # Copy snapshot file if available
-ADD *snapshot*.json / || true
+ADD *snapshot*.json / || true /
 
 # Restore snapshot to install custom nodes
 RUN /restore_snapshot.sh
@@ -71,9 +71,9 @@ ARG HUGGINGFACE_ACCESS_TOKEN
 RUN mkdir -p /runpod-volume/models/checkpoints /runpod-volume/models/vae
 
 # Download models from Hugging Face (if they are not already present)
-RUN wget -nc -O /runpod-volume/models/checkpoints/uberRealisticPornMerge_urpmv13Inpainting.safetensors \
-    https://huggingface.co/mrcuddle/urpm-inpaint-v13/resolve/main/uberRealisticPornMerge_urpmv13Inpainting.safetensors && \
-    wget -nc -O /runpod-volume/models/checkpoints/uberRealisticPornMerge21_v2.safetensors \
+RUN wget -nc -O /runpod-volume/models/checkpoints/URPM-Inpaint-SDXL.safetensors \
+https://huggingface.co/mrcuddle/URPM-Inpaint-Hyper-SDXL/resolve/main/URPM-Inpaint-SDXL.safetensors && \
+    wget -nc -O /runpod-volume/models/checkpoints/URPM-Inpaint-SDXL.safetensors \
     https://huggingface.co/mrcuddle/URPM-SD2.1/resolve/main/uberRealisticPornMerge21_v2.safetensors && \
     wget -nc -O /runpod-volume/models/vae/sdxl_vae.safetensors \
     https://huggingface.co/stabilityai/sdxl-vae/resolve/main/sdxl_vae.safetensors && \
