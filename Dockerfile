@@ -92,9 +92,6 @@ https://huggingface.co/krnl/detection_Resnet50_Final/resolve/main/detection_Resn
 # ==========================
 FROM base as final
 
-# Copy models from the previous stage
-COPY --from=downloader models models
-
 # Ensure the working directory is set
 WORKDIR /comfyui
 
