@@ -65,7 +65,7 @@ FROM base as downloader
 ARG HUGGINGFACE_ACCESS_TOKEN
 
 # Ensure model directories exist
-RUN mkdir -p /runpod-volume/models/checkpoints /runpod-volume/models/vae
+RUN mkdir -p /runpod-volume/models/checkpoints /runpod-volume/models/vae /runpod-volume/models/insightface /runpod-volume/models/facerestore_models
 
 # Download models from Hugging Face (if they are not already present)
 RUN wget -nc -O /runpod-volume/models/checkpoints/URPM-Inpaint-SDXL.safetensors \
@@ -76,6 +76,13 @@ RUN wget -nc -O /runpod-volume/models/vae/sdxl_vae.safetensors \
     
 RUN wget -nc -O /runpod-volume/models/vae/sdxl-vae-fp16-fix.safetensors \
     https://huggingface.co/madebyollin/sdxl-vae-fp16-fix/resolve/main/sdxl_vae.safetensors
+
+# Add commands to download inswapper_128.onnx and GFPGANv1.4.pth
+RUN wget -nc -O /runpod-volume/models/insightface/inswapper_128.onnx \
+    https://huggingface.co/thebiglaskowski/inswapper_128.onnx/resolve/main/inswapper_128.onnx
+
+RUN wget -nc -O /runpod-volume/models/facerestore_models/GFPGANv1.4.pth \
+    https://huggingface.co/th2w33knd/GFPGANv1.4/resolve/main/GFPGANv1.4.pth
 
 # ==========================
 # Stage 3: Final Deployment
