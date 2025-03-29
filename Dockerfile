@@ -60,9 +60,6 @@ ENTRYPOINT ["/start.sh"]
 # =======================
 # Stage 2: Model Download
 # =======================
-FROM base as downloader
-
-ARG HUGGINGFACE_ACCESS_TOKEN
 
 # Ensure model directories exist
 RUN mkdir -p models/checkpoints models/vae models/insightface models/facerestore_models models/facedetection
