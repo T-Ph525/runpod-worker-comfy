@@ -31,7 +31,7 @@ RUN /usr/bin/yes | comfy --workspace /comfyui install --cuda-version 11.8 --nvid
 
 # Change working directory to ComfyUI
 WORKDIR /comfyui
-
+RUN comfy node install ComfyUI-ReActor Comfyui-Easy-Use
 # Install runpod
 RUN pip install runpod requests
 
